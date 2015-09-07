@@ -7,9 +7,11 @@ $google_color_red:    #ea4335; //old: #db4437;
 // Custom
 $load_L_Tail:   5deg;
 $load_L_Body: 270deg;
-$load_L_Foot: 360deg * (3/5);
+$load_L_Foot: 360deg * (3 / 5);
 $load_line_speed: 1333ms;
 $load_timing_function: cubic-bezier(0.4, 0.0, 0.2, 1);
+$load_line_width: 1em * ( 3 / 14);
+$load_size:       1em * (28 / 14);
 
 // Loading Line Degree
 $load_L_Air: 360deg - $load_L_Body;
@@ -17,9 +19,8 @@ $load_L_S: $load_L_Tail * 2;
 $load_L_L: $load_L_Tail * 2 + $load_L_Body;
 
 // loading-circle Rotate Speed
-$load_circle_rotate_nofoot_speed: 360deg / (           0 + $load_L_Air) * $load_line_speed;
 $load_circle_rotate_foot_speed:   360deg / ($load_L_Foot + $load_L_Air) * $load_line_speed;
-// 1568.23529ms
+$load_circle_rotate_nofoot_speed: 360deg / (           0 + $load_L_Air) * $load_line_speed;
 
 // loading-line Rotate Step
 @function load_line_rotate_step($Body) {
@@ -79,75 +80,87 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
   @return L_line_color $load_line_speed*4 $load_timing_function infinite both;
 }
 
-
-//style mixin
+// Style Extend
 @function other_side($side) {
   @if $side == right    { @return left; }
   @elseif $side == left { @return right; }
 }
-@mixin loading_size($size) {
-  width: $size; height: $size;
+%before { content: ""; display: block; }
+%loading_size {
+  width: $load_size; height: $load_size;
   box-sizing: border-box;
   border-radius: 50%;
 }
-@mixin loading_line($line_width) {
+%loading_line {
   border-style: solid;
-  border-width: $line_width;
+  border-width: $load_line_width;
   border-color: currentColor;
 }
-@mixin loading_clip($side, $size) {
-  position: absolute;
-  @if $side == right    { clip: rect(0 $size $size $size/2); }
-  @elseif $side == left { clip: rect(0 $size/2 $size 0); }
-  @elseif $side == mid  { clip: rect(0 ($size/2 + 1px) $size/2 ($size/2 - 1px)); }
+%loading_clip {
+  &_right {
+    position: absolute;
+    clip: rect(0 $load_size $load_size $load_size/2);
+  }
+  &_left {
+    position: absolute;
+    clip: rect(0 $load_size/2 $load_size 0);
+  }
+  &_mid {
+    position: absolute;
+    clip: rect(0 $load_size/2 + .05em $load_size/2 $load_size/2 - .05em);
+  }
 }
-@mixin loading_line_animation($color_rainbow, $animation_list) {
-  @if $color_rainbow == 1 {
+@mixin loading_line_animation($google_color, $animation_list) {
+  @if $google_color == 1 {
     $animation_list : append($animation_list, L_line_color_F());
   }
   animation: $animation_list;
 }
 
-//loading mixin
-@mixin loading_circle($size:60px, $line_width:6px, $rotate_mode:0, $color_rainbow:0) {
-  @include loading_size($size);
-  @if $rotate_mode == 1 { animation: L_circle_rotate_F($load_circle_rotate_foot_speed);  }
-  @else { animation: L_circle_rotate_F($load_circle_rotate_nofoot_speed); }
-  
+// Loading Mixin
+@mixin loading_circle($rotate_mode:0, $google_color:0) {
+  @if $rotate_mode == 1 { animation: L_circle_rotate_F($load_circle_rotate_nofoot_speed);  }
+  @else { animation: L_circle_rotate_F($load_circle_rotate_foot_speed); }
   &:before{
-    content: ""; display: block;
-    @include loading_size($size);
-    @include loading_clip(mid, $size);
-    @include loading_line($line_width);
     $animation_list: (L_line_rotate_F(),);
-    @include loading_line_animation($color_rainbow, $animation_list);    
+    @include loading_line_animation($google_color, $animation_list);
+  }
+  
+  @at-root .loading-circle {
+    @extend %loading_size;
+    &:before {
+      @extend %before;
+      @extend %loading_size;
+      @extend %loading_clip_mid;
+      @extend %loading_line;
+    }
   }
   
   @each $side in (right, left) {
-    
     .loading-line-#{$side} {
-    @include loading_size($size);
-    @include loading_clip($side, $size);
-    animation: L_line_rotate_F();
-    
+      animation: L_line_rotate_F();
       &:before{
-        content: ""; display: block;
-        @include loading_size($size);
-        @include loading_clip(other_side($side), $size);
-        @include loading_line($line_width);
         $animation_list: (L_side_rotate_F($side),);
-        @include loading_line_animation($color_rainbow, $animation_list);
+        @include loading_line_animation($google_color, $animation_list);
       }
     }
     
+    @at-root .loading-line-#{$side} {
+      @extend %loading_size;
+      @extend %loading_clip_#{$side};
+      &:before {
+        @extend %before;
+        @extend %loading_size;
+        @extend %loading_clip_#{other_side($side)};
+        @extend %loading_line;
+      }
+    }
   }
 }
 
 //--------------------------------------------------
 
-.loading-circle           { @include loading_circle; }
-.loading-circle-2         { @include loading_circle($rotate_mode:1); }
-.loading-circle-rainbow   { @include loading_circle($color_rainbow:1); }
-.loading-circle-rainbow-2 { @include loading_circle($rotate_mode:1, $color_rainbow:1); }
-.loading-circle-gcolor    { @include loading_circle($color_rainbow:1); }
-.loading-circle-gcolor-2  { @include loading_circle($rotate_mode:1, $color_rainbow:1); }
+.loading-circle { @include loading_circle; }
+.loading-circle.slow { @include loading_circle($rotate_mode:1); }
+.loading-circle.google-color { @include loading_circle($google_color:1); }
+.loading-circle.google-color.slow { @include loading_circle($rotate_mode:1, $google_color:1); }
