@@ -150,40 +150,6 @@
             transform: rotate(5deg);
   }
 }
-@-webkit-keyframes L_line_color {
-  0%, 15% {
-    border-color: #4285f4;
-  }
-  25%, 40% {
-    border-color: #ea4335;
-  }
-  50%, 65% {
-    border-color: #fbbc05;
-  }
-  75%, 90% {
-    border-color: #34a853;
-  }
-  100% {
-    border-color: #4285f4;
-  }
-}
-@keyframes L_line_color {
-  0%, 15% {
-    border-color: #4285f4;
-  }
-  25%, 40% {
-    border-color: #ea4335;
-  }
-  50%, 65% {
-    border-color: #fbbc05;
-  }
-  75%, 90% {
-    border-color: #34a853;
-  }
-  100% {
-    border-color: #4285f4;
-  }
-}
 .loading-circle:before, .loading-line-right:before, .loading-line-left:before {
   content: "";
   display: block;
@@ -219,6 +185,10 @@
   -webkit-animation: L_circle_rotate 1568.23529ms linear infinite both;
           animation: L_circle_rotate 1568.23529ms linear infinite both;
 }
+.loading-circle.slow {
+  -webkit-animation: L_circle_rotate 5332ms linear infinite both;
+          animation: L_circle_rotate 5332ms linear infinite both;
+}
 .loading-circle:before {
   -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
           animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
@@ -240,77 +210,116 @@
           animation: L_left_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
 }
 
-.loading-circle.slow {
-  -webkit-animation: L_circle_rotate 5332ms linear infinite both;
-          animation: L_circle_rotate 5332ms linear infinite both;
-}
-.loading-circle.slow:before {
-  -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-}
-.loading-circle.slow .loading-line-right {
-  -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-}
-.loading-circle.slow .loading-line-right:before {
-  -webkit-animation: L_right_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_right_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-}
-.loading-circle.slow .loading-line-left {
-  -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-}
-.loading-circle.slow .loading-line-left:before {
-  -webkit-animation: L_left_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_left_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+@-webkit-keyframes google-color {
+  0%, 15% {
+    border-color: #4285f4;
+  }
+  25%, 40% {
+    border-color: #ea4335;
+  }
+  50%, 65% {
+    border-color: #fbbc05;
+  }
+  75%, 90% {
+    border-color: #34a853;
+  }
+  100% {
+    border-color: #4285f4;
+  }
 }
 
-.loading-circle.google-color {
-  -webkit-animation: L_circle_rotate 1568.23529ms linear infinite both;
-          animation: L_circle_rotate 1568.23529ms linear infinite both;
+@keyframes google-color {
+  0%, 15% {
+    border-color: #4285f4;
+  }
+  25%, 40% {
+    border-color: #ea4335;
+  }
+  50%, 65% {
+    border-color: #fbbc05;
+  }
+  75%, 90% {
+    border-color: #34a853;
+  }
+  100% {
+    border-color: #4285f4;
+  }
 }
 .loading-circle.google-color:before {
-  -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, L_line_color 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, L_line_color 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-}
-.loading-circle.google-color .loading-line-right {
-  -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+  -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color 5332ms linear infinite both;
+          animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color 5332ms linear infinite both;
 }
 .loading-circle.google-color .loading-line-right:before {
-  -webkit-animation: L_right_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, L_line_color 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_right_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, L_line_color 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-}
-.loading-circle.google-color .loading-line-left {
-  -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+  -webkit-animation: L_right_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color 5332ms linear infinite both;
+          animation: L_right_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color 5332ms linear infinite both;
 }
 .loading-circle.google-color .loading-line-left:before {
-  -webkit-animation: L_left_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, L_line_color 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_left_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, L_line_color 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+  -webkit-animation: L_left_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color 5332ms linear infinite both;
+          animation: L_left_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color 5332ms linear infinite both;
 }
 
-.loading-circle.google-color.slow {
-  -webkit-animation: L_circle_rotate 5332ms linear infinite both;
-          animation: L_circle_rotate 5332ms linear infinite both;
+@-webkit-keyframes g-plus-color {
+  0%, 8.57143% {
+    border-color: #e53935;
+  }
+  14.28571%, 22.85714% {
+    border-color: #aa00ff;
+  }
+  28.57143%, 37.14286% {
+    border-color: #1d87e4;
+  }
+  42.85714%, 51.42857% {
+    border-color: #00acc1;
+  }
+  57.14286%, 65.71429% {
+    border-color: #7cb342;
+  }
+  71.42857%, 80% {
+    border-color: #f9a825;
+  }
+  85.71429%, 94.28571% {
+    border-color: #ff7043;
+  }
+  100% {
+    border-color: #e53935;
+  }
 }
-.loading-circle.google-color.slow:before {
-  -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, L_line_color 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, L_line_color 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+
+@keyframes g-plus-color {
+  0%, 8.57143% {
+    border-color: #e53935;
+  }
+  14.28571%, 22.85714% {
+    border-color: #aa00ff;
+  }
+  28.57143%, 37.14286% {
+    border-color: #1d87e4;
+  }
+  42.85714%, 51.42857% {
+    border-color: #00acc1;
+  }
+  57.14286%, 65.71429% {
+    border-color: #7cb342;
+  }
+  71.42857%, 80% {
+    border-color: #f9a825;
+  }
+  85.71429%, 94.28571% {
+    border-color: #ff7043;
+  }
+  100% {
+    border-color: #e53935;
+  }
 }
-.loading-circle.google-color.slow .loading-line-right {
-  -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+.loading-circle.g-plus-color:before {
+  -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, g-plus-color 9331ms linear infinite both;
+          animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, g-plus-color 9331ms linear infinite both;
 }
-.loading-circle.google-color.slow .loading-line-right:before {
-  -webkit-animation: L_right_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, L_line_color 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_right_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, L_line_color 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+.loading-circle.g-plus-color .loading-line-right:before {
+  -webkit-animation: L_right_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, g-plus-color 9331ms linear infinite both;
+          animation: L_right_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, g-plus-color 9331ms linear infinite both;
 }
-.loading-circle.google-color.slow .loading-line-left {
-  -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-}
-.loading-circle.google-color.slow .loading-line-left:before {
-  -webkit-animation: L_left_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, L_line_color 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_left_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, L_line_color 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+.loading-circle.g-plus-color .loading-line-left:before {
+  -webkit-animation: L_left_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, g-plus-color 9331ms linear infinite both;
+          animation: L_left_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, g-plus-color 9331ms linear infinite both;
 }

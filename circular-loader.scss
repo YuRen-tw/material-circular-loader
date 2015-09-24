@@ -1,8 +1,8 @@
-// Google color
-$google_color_blue:   #4285f4; //old: #4285f4;
-$google_color_green:  #34a853; //old: #0f9d58;
-$google_color_yellow: #fbbc05; //old: #f4b400;
-$google_color_red:    #ea4335; //old: #db4437;
+// Google color (blue, red, yellow, green)
+// $google_color_old: (#4285f4, #db4437, #f4b400, #0f9d58);
+$google_color: (#4285f4, #ea4335, #fbbc05, #34a853);
+// Google+ color (red, purple, blue, cyan, green, yellow, orange)
+$g_plus_color: (#e53935, #aa00ff, #1d87e4, #00acc1, #7cb342, #f9a825, #ff7043);
 
 // Custom
 $load_L_Tail:   5deg;
@@ -58,13 +58,6 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
   50%  { transform: rotate($load_L_L/2); }
   100% { transform: rotate($load_L_S/2); }
 }
-@keyframes L_line_color {
-   0%, 15%  { border-color: $google_color_blue; }
-  25%, 40%  { border-color: $google_color_red; }
-  50%, 65%  { border-color: $google_color_yellow; }
-  75%, 90%  { border-color: $google_color_green; }
-  100%      { border-color: $google_color_blue; }
-}
 
 // Keyframes Function
 @function L_circle_rotate_F($speed){
@@ -75,9 +68,6 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
 }
 @function L_side_rotate_F($side){
   @return L_#{$side}_rotate $load_line_speed $load_timing_function infinite both;
-}
-@function L_line_color_F(){
-  @return L_line_color $load_line_speed*4 $load_timing_function infinite both;
 }
 
 // Style Extend
@@ -110,21 +100,36 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
     clip: rect(0 $load_size/2 + .05em $load_size/2 $load_size/2 - .05em);
   }
 }
-@mixin loading_line_animation($google_color, $animation_list) {
-  @if $google_color == 1 {
-    $animation_list : append($animation_list, L_line_color_F());
+
+// Loading Line Color
+@mixin make_line_color_keyframes($keyframes_name, $color_list) {
+  $line_color_step: length($color_list);
+  $step_long: 100% / $line_color_step;
+  
+  @at-root {
+    @keyframes #{$keyframes_name} {
+      @for $i from 1 through $line_color_step {
+        $begin: $step_long * ($i - 1);
+        $end: $begin + $step_long * (3 / 5);
+        #{$begin}, #{$end} { border-color: nth($color_list, $i); }
+      }
+      100% { border-color: nth($color_list, 1);}
+    }
   }
+}
+@mixin loading_line_animation($animation_list, $keyframes_name, $color_list) {
+  $line_color_step: length($color_list);
+  $color_animation: #{$keyframes_name} $load_line_speed*$line_color_step linear infinite both;
+  $animation_list : append($animation_list, $color_animation);
   animation: $animation_list;
 }
 
 // Loading Mixin
-@mixin loading_circle($rotate_mode:0, $google_color:0) {
-  @if $rotate_mode == 1 { animation: L_circle_rotate_F($load_circle_rotate_nofoot_speed);  }
-  @else { animation: L_circle_rotate_F($load_circle_rotate_foot_speed); }
-  &:before{
-    $animation_list: (L_line_rotate_F(),);
-    @include loading_line_animation($google_color, $animation_list);
-  }
+@mixin loading_circle() {
+  animation: L_circle_rotate_F($load_circle_rotate_foot_speed);
+  &.slow{ animation: L_circle_rotate_F($load_circle_rotate_nofoot_speed); }
+  
+  &:before{ animation: L_line_rotate_F(); }
   
   @at-root .loading-circle {
     @extend %loading_size;
@@ -139,10 +144,7 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
   @each $side in (right, left) {
     .loading-line-#{$side} {
       animation: L_line_rotate_F();
-      &:before{
-        $animation_list: (L_side_rotate_F($side),);
-        @include loading_line_animation($google_color, $animation_list);
-      }
+      &:before{ animation: L_side_rotate_F($side); }
     }
     
     @at-root .loading-line-#{$side} {
@@ -158,9 +160,25 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
   }
 }
 
+@mixin loading_line_color($name, $color_list) {
+  @include make_line_color_keyframes($name, $color_list);
+  &.#{$name} {
+    &:before{
+      $animation_list: (L_line_rotate_F(),);
+      @include loading_line_animation($animation_list, $name, $color_list);
+    }
+    
+    @each $side in (right, left) {
+      .loading-line-#{$side}:before {
+        $animation_list: (L_side_rotate_F($side),);
+        @include loading_line_animation($animation_list, $name, $color_list);
+      }
+    }
+  }
+}
+
 //--------------------------------------------------
 
 .loading-circle { @include loading_circle; }
-.loading-circle.slow { @include loading_circle($rotate_mode:1); }
-.loading-circle.google-color { @include loading_circle($google_color:1); }
-.loading-circle.google-color.slow { @include loading_circle($rotate_mode:1, $google_color:1); }
+.loading-circle { @include loading_line_color(google-color, $google_color); }
+.loading-circle { @include loading_line_color(g-plus-color, $g_plus_color); }
