@@ -189,21 +189,14 @@
   -webkit-animation: L_circle_rotate 5332ms linear infinite both;
           animation: L_circle_rotate 5332ms linear infinite both;
 }
-.loading-circle:before {
-  -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-}
-.loading-circle .loading-line-right {
+.loading-circle:before,
+.loading-circle .loading-line-right, .loading-circle .loading-line-left {
   -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
           animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
 }
 .loading-circle .loading-line-right:before {
   -webkit-animation: L_right_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
           animation: L_right_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-}
-.loading-circle .loading-line-left {
-  -webkit-animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_line_rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
 }
 .loading-circle .loading-line-left:before {
   -webkit-animation: L_left_rotate 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;

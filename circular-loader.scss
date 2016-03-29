@@ -1,5 +1,5 @@
 // Custom
-$load_L_Tail:   5deg;
+$load_L_Tail:   5deg;  // less than (360deg - $load_L_Body) / 2 
 $load_L_Body: 270deg;
 $load_L_Foot: 360deg * (3 / 5);
 $load_line_speed: 1333ms;
@@ -121,23 +121,23 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
 // Loading Mixin
 @mixin loading_circle($line_name) {
   @extend %loading_size;
-  animation: L_circle_rotate_F($load_circle_rotate_foot_speed);
-  
+  animation: L_circle_rotate_F($load_circle_rotate_foot_speed);  
   &.slow{ animation: L_circle_rotate_F($load_circle_rotate_nofoot_speed); }
+  
+  &:before,   
+  .#{$line_name}-right, .#{$line_name}-left { animation: L_line_rotate_F(); }
   
   &:before{
     @extend %before;
     @extend %loading_size;
     @extend %loading_clip_mid;
     @extend %loading_line;
-    animation: L_line_rotate_F();
   }
   
   @each $side in (right, left) {
     .#{$line_name}-#{$side} {
       @extend %loading_size;
       @extend %loading_clip_#{$side};
-      animation: L_line_rotate_F();
   
       &:before{
         @extend %before;
@@ -170,13 +170,13 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
 //--------------------------------------------------
 
 // Google color (blue, red, yellow, green)
-$google_color_old: (#4285f4, #db4437, #f4b400, #0f9d58);
+//$google_color_old: (#4285f4, #db4437, #f4b400, #0f9d58);
 $google_color: (#4285f4, #ea4335, #fbbc05, #34a853);
 // Google+ color (red, purple, blue, cyan, green, yellow, orange)
-$g_plus_color: (#e53935, #aa00ff, #1d87e4, #00acc1, #7cb342, #f9a825, #ff7043);
+//$g_plus_color: (#e53935, #aa00ff, #1d87e4, #00acc1, #7cb342, #f9a825, #ff7043);
 
 .loading-circle {
   @include loading_circle(loading-line);
   @include loading_line_color(loading-line, google-color, $google_color);
-  @include loading_line_color(loading-line, g-plus-color, $g_plus_color);
+  //@include loading_line_color(loading-line, g-plus-color, $g_plus_color);
 }
