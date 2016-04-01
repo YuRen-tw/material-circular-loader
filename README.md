@@ -60,6 +60,7 @@ SCSS
 }
 ```
 There are some lists of colors can be used:
+
 | List of colors      | Description           | Colors                   |
 | ------------------- | --------------------- | ------------------------ |
 | `$google_color`     | Google main color     | Blue, Red, Yellow, Green |
