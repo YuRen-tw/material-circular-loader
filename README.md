@@ -17,7 +17,7 @@ SCSS
 ```
 
 ## Size
-Width and height are `2em` (radius of circle is `1em`)
+Width and height are `2em`. (radius of circle is `1em`)  
 Use `font-size` to change the loader size.
 
 SCSS
