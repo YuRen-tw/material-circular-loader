@@ -91,7 +91,7 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
   }
   &_mid {
     position: absolute;
-    clip: rect(0 $load_size/2 + .05em $load_size/2 $load_size/2 - .05em);
+    clip: rect(0 $load_size/2+.05em $load_size/2 $load_size/2-.05em);
   }
 }
 
@@ -169,14 +169,19 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
 
 //--------------------------------------------------
 
+/*
+
 // Google color (blue, red, yellow, green)
-//$google_color_old: (#4285f4, #db4437, #f4b400, #0f9d58);
+$google_color_old: (#4285f4, #db4437, #f4b400, #0f9d58);
 $google_color: (#4285f4, #ea4335, #fbbc05, #34a853);
 // Google+ color (red, purple, blue, cyan, green, yellow, orange)
-//$g_plus_color: (#e53935, #aa00ff, #1d87e4, #00acc1, #7cb342, #f9a825, #ff7043);
+$g_plus_color: (#e53935, #aa00ff, #1d87e4, #00acc1, #7cb342, #f9a825, #ff7043);
 
 .loading-circle {
   @include loading_circle(loading-line);
   @include loading_line_color(loading-line, google-color, $google_color);
-  //@include loading_line_color(loading-line, g-plus-color, $g_plus_color);
+  @include loading_line_color(loading-line, g-plus-color, $g_plus_color);
 }
+
+*/
+
