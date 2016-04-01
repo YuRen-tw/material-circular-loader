@@ -63,6 +63,6 @@ There are some lists of colors can be used:
 
 | List of colors      | Description           | Colors                   |
 | ------------------- | --------------------- | ------------------------ |
-| `$google_color`     | Google main color     | Blue, Red, Yellow, Green |
+| `$google_color`     | Google main colors    | Blue, Red, Yellow, Green |
 | `$google_color_old` | (Old version)         |                          |
 | `$g_plus_color`     | Colors in Google+ app | 7 colors                 |
