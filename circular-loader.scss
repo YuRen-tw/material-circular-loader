@@ -169,13 +169,13 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
 
 //--------------------------------------------------
 
-/*
-
 // Google color (blue, red, yellow, green)
 $google_color_old: (#4285f4, #db4437, #f4b400, #0f9d58);
 $google_color: (#4285f4, #ea4335, #fbbc05, #34a853);
 // Google+ color (red, purple, blue, cyan, green, yellow, orange)
 $g_plus_color: (#e53935, #aa00ff, #1d87e4, #00acc1, #7cb342, #f9a825, #ff7043);
+
+/*
 
 .loading-circle {
   @include loading_circle(loading-line);
