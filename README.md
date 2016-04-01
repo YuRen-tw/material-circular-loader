@@ -39,7 +39,7 @@ SCSS
 }
 ```
 
-## Multiple Color
+## Multiple Colors
 HTML
 ```html
 <div class="Cir my-color"> <!-- add a class -->
