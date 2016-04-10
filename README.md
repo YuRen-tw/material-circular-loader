@@ -40,6 +40,8 @@ SCSS
 ```
 
 ## Multiple Colors
+Include mixin `loader_stroke_colors` to change the loader color.
+
 HTML
 ```html
 <div class="Cir my-color"> <!-- add a class -->
@@ -66,3 +68,43 @@ There are some lists of colors can be used:
 | `$google_colors`     | Google main colors    | Blue, Red, Yellow, Green |
 | `$google_colors_old` | (Old version)         |                          |
 | `$g_plus_colors`     | Colors in Google+ app | 7 colors                 |
+
+## Stroke Width
+Stroke width defaults to `(3/14) * 1em`.  
+Include mixin `loader_stroke_width` to change the stroke width.
+
+HTML
+```html
+<div class="Cir new_width"> <!-- add a class -->
+  <div class="S-left"></div>
+  <div class="S-right"></div>
+</div> 
+```
+SCSS
+```scss
+.Cir {
+  @include loader_circle(S);
+  @include loader_stroke_width(L, new_width, 10px);
+  // (classNameOfStroke, addedClassName, widthOfStroke)
+}
+```
+
+## Rotate Step
+Rotate step defaults to `3 / 5`. (a 5 pointed star shape)  
+Include mixin `loader_stroke_rotate_step` to change the rotate step.
+
+HTML
+```html
+<div class="Cir seven_star"> <!-- add a class -->
+  <div class="S-left"></div>
+  <div class="S-right"></div>
+</div> 
+```
+SCSS
+```scss
+.Cir {
+  @include loader_circle(S);
+  @include loader_stroke_rotate_step(seven_star, 3/7);
+  // (addedClassName, step)
+}
+```

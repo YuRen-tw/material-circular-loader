@@ -1,20 +1,19 @@
-// Custom
+// Setting
 $loader_S_Tail:   5deg;  // less than (360deg - $loader_S_Body) / 2
 $loader_S_Body: 270deg;
-$loader_S_Foot: 360deg * (3 / 5);
 $loader_speed: 1333ms;
 $loader_timing_function: cubic-bezier(0.4, 0.0, 0.2, 1);
-$loader_stroke_width: 1em * ( 3 / 14);
-$loader_size: 1em * (28 / 14);
 
 // Loader Stroke Degree
 $loader_S_Air: 360deg - $loader_S_Body;
 $loader_S_S: $loader_S_Tail * 2;
 $loader_S_L: $loader_S_Tail * 2 + $loader_S_Body;
 
-// Loader Circle Rotate Speed
-$loader_circle_rotate_foot_speed:   360deg / ($loader_S_Foot + $loader_S_Air) * $loader_speed;
-$loader_circle_rotate_nofoot_speed: 360deg / (             0 + $loader_S_Air) * $loader_speed;
+// Default
+$loader_size: 1em * (28 / 14);
+$loader_stroke_width: 1em * (3 / 14);
+$loader_Foot: 360deg * (3 / 5);
+$loader_circle_rotate_speed:   360deg / ($loader_Foot + $loader_S_Air) * $loader_speed;
 
 // Loader Stroke Rotate Step
 @function loader_stroke_rotate_step($Body) {
@@ -121,8 +120,7 @@ $loader_stroke_rotate_step: loader_stroke_rotate_step($loader_S_Body);
 // Loader Mixin
 @mixin loader_circle($stroke_name) {
   @extend %loader_size;
-  animation: L_circle_rotate_F($loader_circle_rotate_foot_speed);
-  &.slow{ animation: L_circle_rotate_F($loader_circle_rotate_nofoot_speed); }
+  animation: L_circle_rotate_F($loader_circle_rotate_speed);
   
   &:before,   
   .#{$stroke_name}-right, .#{$stroke_name}-left { animation: L_stroke_rotate_F(); }
@@ -130,8 +128,8 @@ $loader_stroke_rotate_step: loader_stroke_rotate_step($loader_S_Body);
   &:before {
     @extend %before;
     @extend %loader_size;
-    @extend %loader_stroke_clip_mid;
     @extend %loader_stroke;
+    @extend %loader_stroke_clip_mid;
   }
 
   @each $side in (right, left) {
@@ -142,29 +140,43 @@ $loader_stroke_rotate_step: loader_stroke_rotate_step($loader_S_Body);
       &:before {
         @extend %before;
         @extend %loader_size;
-        @extend %loader_stroke_clip_#{other_side($side)};
         @extend %loader_stroke;
+        @extend %loader_stroke_clip_#{other_side($side)};
         animation: L_stroke_side_grow_F($side);
       }
     }
   }
 }
 
+@mixin loader_stroke_width($stroke_name, $class_name, $width) {
+  &.#{$class_name} {
+    &:before,
+    .#{$stroke_name}-right:before, .#{$stroke_name}-left:before { border-width: $width; }
+  }
+}
+
 @mixin loader_stroke_colors($stroke_name, $class_name, $colors_list) {
-  @include make_stroke_colors_keyframes($class_name, $colors_list);
+  $keyframes_name: #{$class_name}_K;
+  @include make_stroke_colors_keyframes($keyframes_name, $colors_list);
   &.#{$class_name} {
     &:before {
       $animation_list: (L_stroke_rotate_F(),);
-      @include loader_stroke_colors_animation($animation_list, $class_name, $colors_list);
+      @include loader_stroke_colors_animation($animation_list, $keyframes_name, $colors_list);
     }
     
     @each $side in (right, left) {
       .#{$stroke_name}-#{$side}:before {
         $animation_list: (L_stroke_side_grow_F($side),);
-        @include loader_stroke_colors_animation($animation_list, $class_name, $colors_list);
+        @include loader_stroke_colors_animation($animation_list, $keyframes_name, $colors_list);
       }
     }
   }
+}
+
+@mixin loader_stroke_rotate_step($class_name, $step) {
+  $foot: 360deg * $step;
+  $speed: 360deg / ($foot + $loader_S_Air) * $loader_speed;
+  &.#{$class_name} { animation: L_circle_rotate_F($speed); }
 }
 
 //--------------------------------------------------
@@ -180,7 +192,6 @@ $g_plus_colors: (#e53935, #aa00ff, #1d87e4, #00acc1, #7cb342, #f9a825, #ff7043);
 .loader-circle {
   @include loader_circle(loader-stroke);
   @include loader_stroke_colors(loader-stroke, google-color, $google_colors);
-  @include loader_stroke_colors(loader-stroke, g-plus-color, $g_plus_colors);
 }
 
 */
