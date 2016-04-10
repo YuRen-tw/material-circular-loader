@@ -5,14 +5,14 @@ Google Material design: [Progress & activity](https://www.google.com/design/spec
 HTML
 ```html
 <div class="circular">
-  <div class="line-left"></div>
-  <div class="line-right"></div>
+  <div class="stroke-left"></div>
+  <div class="stroke-right"></div>
 </div> 
 ```
 SCSS
 ```scss
 .circular {
-  @include loading_circle(line); // class name of line
+  @include loader_circle(stroke); // class name of stroke
 }
 ```
 
@@ -23,7 +23,7 @@ Use `font-size` to change the loader size.
 SCSS
 ```scss
 .circular {
-  @include loading_circle(line);
+  @include loader_circle(stroke);
   font-size: 30px; // width and height become 60px
 }
 ```
@@ -34,7 +34,7 @@ Use `color` to change the loader color.
 SCSS
 ```scss
 .circular {
-  @include loading_circle(line);
+  @include loader_circle(stroke);
   color: #2a74f6;
 }
 ```
@@ -43,26 +43,26 @@ SCSS
 HTML
 ```html
 <div class="Cir my-color"> <!-- add a class -->
-  <div class="L-left"></div>
-  <div class="L-right"></div>
+  <div class="S-left"></div>
+  <div class="S-right"></div>
 </div> 
 ```
 SCSS
 ```scss
 .Cir {
-  @include loading_circle(L);
-  @include loading_line_color(
+  @include loader_circle(S);
+  @include loader_stroke_colors(
     L,
     my-color,
     (#4285f4, #ea4335, #fbbc05, #34a853)
   );
-  // (classNameOfLine, addedClassName, ListOfColors)
+  // (classNameOfStroke, addedClassName, listOfColors)
 }
 ```
 There are some lists of colors can be used:
 
-| List of colors      | Description           | Colors                   |
-| ------------------- | --------------------- | ------------------------ |
-| `$google_color`     | Google main colors    | Blue, Red, Yellow, Green |
-| `$google_color_old` | (Old version)         |                          |
-| `$g_plus_color`     | Colors in Google+ app | 7 colors                 |
+| List of colors       | Description           | Colors                   |
+| -------------------- | --------------------- | ------------------------ |
+| `$google_colors`     | Google main colors    | Blue, Red, Yellow, Green |
+| `$google_colors_old` | (Old version)         |                          |
+| `$g_plus_colors`     | Colors in Google+ app | 7 colors                 |

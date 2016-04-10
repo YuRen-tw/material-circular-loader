@@ -1,23 +1,23 @@
 // Custom
-$load_L_Tail:   5deg;  // less than (360deg - $load_L_Body) / 2 
-$load_L_Body: 270deg;
-$load_L_Foot: 360deg * (3 / 5);
-$load_line_speed: 1333ms;
-$load_timing_function: cubic-bezier(0.4, 0.0, 0.2, 1);
-$load_line_width: 1em * ( 3 / 14);
-$load_size:       1em * (28 / 14);
+$loader_S_Tail:   5deg;  // less than (360deg - $loader_S_Body) / 2
+$loader_S_Body: 270deg;
+$loader_S_Foot: 360deg * (3 / 5);
+$loader_speed: 1333ms;
+$loader_timing_function: cubic-bezier(0.4, 0.0, 0.2, 1);
+$loader_stroke_width: 1em * ( 3 / 14);
+$loader_size: 1em * (28 / 14);
 
-// Loading Line Degree
-$load_L_Air: 360deg - $load_L_Body;
-$load_L_S: $load_L_Tail * 2;
-$load_L_L: $load_L_Tail * 2 + $load_L_Body;
+// Loader Stroke Degree
+$loader_S_Air: 360deg - $loader_S_Body;
+$loader_S_S: $loader_S_Tail * 2;
+$loader_S_L: $loader_S_Tail * 2 + $loader_S_Body;
 
-// loading-circle Rotate Speed
-$load_circle_rotate_foot_speed:   360deg / ($load_L_Foot + $load_L_Air) * $load_line_speed;
-$load_circle_rotate_nofoot_speed: 360deg / (           0 + $load_L_Air) * $load_line_speed;
+// Loader Circle Rotate Speed
+$loader_circle_rotate_foot_speed:   360deg / ($loader_S_Foot + $loader_S_Air) * $loader_speed;
+$loader_circle_rotate_nofoot_speed: 360deg / (             0 + $loader_S_Air) * $loader_speed;
 
-// loading-line Rotate Step
-@function load_line_rotate_step($Body) {
+// Loader Stroke Rotate Step
+@function loader_stroke_rotate_step($Body) {
   $D: 360deg;
   $step: 0;
   @while $D > 0deg {
@@ -27,7 +27,7 @@ $load_circle_rotate_nofoot_speed: 360deg / (           0 + $load_L_Air) * $load_
   }
   @return $step * 2;
 }
-$load_line_rotate_step: load_line_rotate_step($load_L_Body);
+$loader_stroke_rotate_step: loader_stroke_rotate_step($loader_S_Body);
 
 
 // Keyframes
@@ -35,33 +35,33 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
   0%    { transform: rotate(  0deg); }
   100%  { transform: rotate(360deg); }
 }
-@keyframes L_line_rotate {
-  @for $i from 0 through $load_line_rotate_step {
-    #{$i/$load_line_rotate_step * 100%} {
-      transform: rotate($load_L_Body/2 * $i);
+@keyframes L_stroke_rotate {
+  @for $i from 0 through $loader_stroke_rotate_step {
+    #{$i/$loader_stroke_rotate_step * 100%} {
+      transform: rotate($loader_S_Body/2 * $i);
     }
   }
 }
-@keyframes L_left_rotate {
-  0%   { transform: rotate(0deg - $load_L_S/2); }
-  50%  { transform: rotate(0deg - $load_L_L/2); }
-  100% { transform: rotate(0deg - $load_L_S/2); }
+@keyframes L_stroke_left_grow {
+  0%   { transform: rotate(0deg - $loader_S_S/2); }
+  50%  { transform: rotate(0deg - $loader_S_L/2); }
+  100% { transform: rotate(0deg - $loader_S_S/2); }
 }
-@keyframes L_right_rotate {
-  0%   { transform: rotate($load_L_S/2); }
-  50%  { transform: rotate($load_L_L/2); }
-  100% { transform: rotate($load_L_S/2); }
+@keyframes L_stroke_right_grow {
+  0%   { transform: rotate($loader_S_S/2); }
+  50%  { transform: rotate($loader_S_L/2); }
+  100% { transform: rotate($loader_S_S/2); }
 }
 
-// Keyframes Function
+// Animation Function
 @function L_circle_rotate_F($speed){
   @return L_circle_rotate $speed linear infinite both;
 }
-@function L_line_rotate_F(){
-  @return L_line_rotate $load_line_speed*$load_line_rotate_step/2 $load_timing_function infinite both;
+@function L_stroke_rotate_F(){
+  @return L_stroke_rotate $loader_speed*$loader_stroke_rotate_step/2 $loader_timing_function infinite both;
 }
-@function L_side_rotate_F($side){
-  @return L_#{$side}_rotate $load_line_speed $load_timing_function infinite both;
+@function L_stroke_side_grow_F($side){
+  @return L_stroke_#{$side}_grow $loader_speed $loader_timing_function infinite both;
 }
 
 // Style Extend
@@ -70,98 +70,98 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
   @elseif $side == left { @return right; }
 }
 %before { content: ""; display: block; }
-%loading_size {
-  width: $load_size; height: $load_size;
+%loader_size {
+  width: $loader_size; height: $loader_size;
   box-sizing: border-box;
   border-radius: 50%;
 }
-%loading_line {
+%loader_stroke {
   border-style: solid;
-  border-width: $load_line_width;
+  border-width: $loader_stroke_width;
   border-color: currentColor;
 }
-%loading_clip {
+%loader_stroke_clip {
   &_right {
     position: absolute;
-    clip: rect(0 $load_size $load_size $load_size/2);
+    clip: rect(0 $loader_size $loader_size $loader_size/2);
   }
   &_left {
     position: absolute;
-    clip: rect(0 $load_size/2 $load_size 0);
+    clip: rect(0 $loader_size/2 $loader_size 0);
   }
   &_mid {
     position: absolute;
-    clip: rect(0 $load_size/2+.05em $load_size/2 $load_size/2-.05em);
+    clip: rect(0 $loader_size/2 + .05em $loader_size/2 $loader_size/2 - .05em);
   }
 }
 
-// Loading Line Color
-@mixin make_line_color_keyframes($keyframes_name, $color_list) {
-  $line_color_step: length($color_list);
-  $step_long: 100% / $line_color_step;
+// Loader Stroke Multiple Colors
+@mixin make_stroke_colors_keyframes($keyframes_name, $colors_list) {
+  $stroke_color_step: length($colors_list);
+  $step_long: 100% / $stroke_color_step;
   
   @at-root {
     @keyframes #{$keyframes_name} {
-      @for $i from 1 through $line_color_step {
+      @for $i from 1 through $stroke_color_step {
         $begin: $step_long * ($i - 1);
         $end: $begin + $step_long * (3 / 5);
-        #{$begin}, #{$end} { border-color: nth($color_list, $i); }
+        #{$begin}, #{$end} { border-color: nth($colors_list, $i); }
       }
-      100% { border-color: nth($color_list, 1);}
+      100% { border-color: nth($colors_list, 1);}
     }
   }
 }
-@mixin loading_line_animation($animation_list, $keyframes_name, $color_list) {
-  $line_color_step: length($color_list);
-  $color_animation: #{$keyframes_name} $load_line_speed*$line_color_step linear infinite both;
-  $animation_list : append($animation_list, $color_animation);
+@mixin loader_stroke_colors_animation($animation_list, $keyframes_name, $colors_list) {
+  $stroke_color_step: length($colors_list);
+  $colors_animation: #{$keyframes_name} $loader_speed*$stroke_color_step linear infinite both;
+  $animation_list : append($animation_list, $colors_animation);
   animation: $animation_list;
 }
 
-// Loading Mixin
-@mixin loading_circle($line_name) {
-  @extend %loading_size;
-  animation: L_circle_rotate_F($load_circle_rotate_foot_speed);  
-  &.slow{ animation: L_circle_rotate_F($load_circle_rotate_nofoot_speed); }
+// Loader Mixin
+@mixin loader_circle($stroke_name) {
+  @extend %loader_size;
+  animation: L_circle_rotate_F($loader_circle_rotate_foot_speed);
+  &.slow{ animation: L_circle_rotate_F($loader_circle_rotate_nofoot_speed); }
   
   &:before,   
-  .#{$line_name}-right, .#{$line_name}-left { animation: L_line_rotate_F(); }
-  
-  &:before{
+  .#{$stroke_name}-right, .#{$stroke_name}-left { animation: L_stroke_rotate_F(); }
+
+  &:before {
     @extend %before;
-    @extend %loading_size;
-    @extend %loading_clip_mid;
-    @extend %loading_line;
+    @extend %loader_size;
+    @extend %loader_stroke_clip_mid;
+    @extend %loader_stroke;
   }
-  
+
   @each $side in (right, left) {
-    .#{$line_name}-#{$side} {
-      @extend %loading_size;
-      @extend %loading_clip_#{$side};
+    .#{$stroke_name}-#{$side} {
+      @extend %loader_size;
+      @extend %loader_stroke_clip_#{$side};
   
-      &:before{
+      &:before {
         @extend %before;
-        @extend %loading_size;
-        @extend %loading_clip_#{other_side($side)};
-        @extend %loading_line;
-        animation: L_side_rotate_F($side);
+        @extend %loader_size;
+        @extend %loader_stroke_clip_#{other_side($side)};
+        @extend %loader_stroke;
+        animation: L_stroke_side_grow_F($side);
       }
     }
   }
 }
 
-@mixin loading_line_color($line_name, $name, $color_list) {
-  @include make_line_color_keyframes($name, $color_list);
-  &.#{$name} {
+@mixin loader_stroke_colors($stroke_name, $class_name, $colors_list) {
+  @include make_stroke_colors_keyframes($class_name, $colors_list);
+  &.#{$class_name} {
     &:before {
-      $animation_list: (L_line_rotate_F(),);
-      @include loading_line_animation($animation_list, $name, $color_list);
+      $animation_list: (L_stroke_rotate_F(),);
+      @include loader_stroke_colors_animation($animation_list, $class_name, $colors_list);
     }
     
     @each $side in (right, left) {
-      .#{$line_name}-#{$side}:before {
-        $animation_list: (L_side_rotate_F($side),);
-        @include loading_line_animation($animation_list, $name, $color_list);
+      .#{$stroke_name}-#{$side}:before {
+        $animation_list: (L_stroke_side_grow_F($side),);
+        @include loader_stroke_colors_animation($animation_list, $class_name, $colors_list);
       }
     }
   }
@@ -170,18 +170,17 @@ $load_line_rotate_step: load_line_rotate_step($load_L_Body);
 //--------------------------------------------------
 
 // Google color (blue, red, yellow, green)
-$google_color_old: (#4285f4, #db4437, #f4b400, #0f9d58);
-$google_color: (#4285f4, #ea4335, #fbbc05, #34a853);
+$google_colors_old: (#4285f4, #db4437, #f4b400, #0f9d58);
+$google_colors: (#4285f4, #ea4335, #fbbc05, #34a853);
 // Google+ color (red, purple, blue, cyan, green, yellow, orange)
-$g_plus_color: (#e53935, #aa00ff, #1d87e4, #00acc1, #7cb342, #f9a825, #ff7043);
+$g_plus_colors: (#e53935, #aa00ff, #1d87e4, #00acc1, #7cb342, #f9a825, #ff7043);
 
 /*
 
-.loading-circle {
-  @include loading_circle(loading-line);
-  @include loading_line_color(loading-line, google-color, $google_color);
-  @include loading_line_color(loading-line, g-plus-color, $g_plus_color);
+.loader-circle {
+  @include loader_circle(loader-stroke);
+  @include loader_stroke_colors(loader-stroke, google-color, $google_colors);
+  @include loader_stroke_colors(loader-stroke, g-plus-color, $g_plus_colors);
 }
 
 */
-
