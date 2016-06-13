@@ -54,7 +54,7 @@ SCSS
 .Cir {
   @include loader_circle(S);
   @include loader_stroke_colors(
-    L,
+    S,
     my-color,
     (#4285f4, #ea4335, #fbbc05, #34a853)
   );
@@ -84,7 +84,7 @@ SCSS
 ```scss
 .Cir {
   @include loader_circle(S);
-  @include loader_stroke_width(L, new_width, 10px);
+  @include loader_stroke_width(S, new_width, 10px);
   // (classNameOfStroke, addedClassName, widthOfStroke)
 }
 ```
