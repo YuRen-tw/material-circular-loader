@@ -63,11 +63,14 @@ SCSS
 ```
 There are some lists of colors can be used:
 
-| List of colors       | Description           | Colors                   |
-| -------------------- | --------------------- | ------------------------ |
-| `$google_colors`     | Google main colors    | Blue, Red, Yellow, Green |
-| `$google_colors_old` | (Old version)         |                          |
-| `$g_plus_colors`     | Colors in Google+ app | 7 colors                 |
+| List of colors         | Description           | Colors                   |
+| ---------------------- | --------------------- | ------------------------ |
+| `$google_colors`       | Google main colors    | Blue, Red, Yellow, Green |
+| `$google_colors_old`   | (Old version)         |                          |
+| `$g_plus_colors`       | Colors in Google+ app | 7 colors                 |
+| `$google_pride_colors` | #prideforeveryone     | 6 colors                 |
+
+![Pride For Everyone](./color_samples.png "Color samples")
 
 ## Stroke Width
 Stroke width defaults to `(3/14) * 1em`.  
