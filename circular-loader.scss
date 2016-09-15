@@ -13,33 +13,31 @@ $loader_S_L: $loader_S_Tail * 2 + $loader_S_Body;
 $loader_size: 1em * (28 / 14);
 $loader_stroke_width: 1em * (3 / 14);
 $loader_Foot: 360deg * (3 / 5);
-$loader_circle_rotate_speed:   360deg / ($loader_Foot + $loader_S_Air) * $loader_speed;
+$loader_circle_rotate_speed: 360deg / ($loader_Foot + $loader_S_Air) * $loader_speed;
 
 // Loader Stroke Rotate Step
-@function loader_stroke_rotate_step($Body) {
-  $D: 360deg;
-  $step: 0;
-  @while $D > 0deg {
-    $D: $D - $Body;
-    $step: $step + 1;
-    @if $Body > $D and $D > 0deg { $D: $D + 360deg; }
-  }
-  @return $step * 2;
+@function GCD($a, $b) {
+  @if $b == 0 { @return $a; }
+  @else { @return GCD($b, $a % $b); }
 }
-$loader_stroke_rotate_step: loader_stroke_rotate_step($loader_S_Body);
-
+@function LCM($a, $b) {
+  @return $a * $b / GCD($a, $b);
+}
+$loader_stroke_rotate_step: LCM(360, $loader_S_Body / 1deg) / ($loader_S_Body / 1deg);
 
 // Keyframes
 @keyframes L_circle_rotate {
-  0%    { transform: rotate(  0deg); }
-  100%  { transform: rotate(360deg); }
+  0%   { transform: rotate(  0deg); }
+  100% { transform: rotate(360deg); }
 }
 @keyframes L_stroke_rotate {
-  @for $i from 0 through $loader_stroke_rotate_step {
-    #{$i/$loader_stroke_rotate_step * 100%} {
-      transform: rotate($loader_S_Body/2 * $i);
-    }
-  }
+  0%   { transform: rotate(   0deg); }
+  100% { transform: rotate(-360deg); }
+}
+@keyframes L_stroke_fix {
+  0%   { transform: rotate(0deg); }
+  50%  { transform: rotate($loader_S_Body/2); }
+  100% { transform: rotate($loader_S_Body); }
 }
 @keyframes L_stroke_left_grow {
   0%   { transform: rotate(0deg - $loader_S_S/2); }
@@ -57,7 +55,10 @@ $loader_stroke_rotate_step: loader_stroke_rotate_step($loader_S_Body);
   @return L_circle_rotate $speed linear infinite both;
 }
 @function L_stroke_rotate_F(){
-  @return L_stroke_rotate $loader_speed*$loader_stroke_rotate_step/2 $loader_timing_function infinite both;
+  @return L_stroke_rotate $loader_speed*$loader_stroke_rotate_step steps($loader_stroke_rotate_step) infinite both;
+}
+@function L_stroke_fix_F(){
+  @return L_stroke_fix $loader_speed $loader_timing_function infinite both;
 }
 @function L_stroke_side_grow_F($side){
   @return L_stroke_#{$side}_grow $loader_speed $loader_timing_function infinite both;
@@ -113,7 +114,7 @@ $loader_stroke_rotate_step: loader_stroke_rotate_step($loader_S_Body);
 @mixin loader_stroke_colors_animation($animation_list, $keyframes_name, $colors_list) {
   $stroke_color_step: length($colors_list);
   $colors_animation: #{$keyframes_name} $loader_speed*$stroke_color_step linear infinite both;
-  $animation_list : append($animation_list, $colors_animation);
+  $animation_list: append($animation_list, $colors_animation);
   animation: $animation_list;
 }
 
@@ -122,22 +123,25 @@ $loader_stroke_rotate_step: loader_stroke_rotate_step($loader_S_Body);
   @extend %loader_size;
   animation: L_circle_rotate_F($loader_circle_rotate_speed);
   
-  &:before,   
-  .#{$stroke_name}-right, .#{$stroke_name}-left { animation: L_stroke_rotate_F(); }
+  .#{$stroke_name}::before,   
+  .#{$stroke_name}-right, .#{$stroke_name}-left { animation: L_stroke_fix_F(); }
 
-  &:before {
-    @extend %before;
+  .#{$stroke_name} {
     @extend %loader_size;
-    @extend %loader_stroke;
-    @extend %loader_stroke_clip_mid;
+    animation: L_stroke_rotate_F();
+    &::before {
+      @extend %before;
+      @extend %loader_size;
+      @extend %loader_stroke;
+      @extend %loader_stroke_clip_mid;
+    }
   }
-
   @each $side in (right, left) {
     .#{$stroke_name}-#{$side} {
       @extend %loader_size;
       @extend %loader_stroke_clip_#{$side};
   
-      &:before {
+      &::before {
         @extend %before;
         @extend %loader_size;
         @extend %loader_stroke;
@@ -150,7 +154,7 @@ $loader_stroke_rotate_step: loader_stroke_rotate_step($loader_S_Body);
 
 @mixin loader_stroke_width($stroke_name, $class_name, $width) {
   &.#{$class_name} {
-    &:before,
+    .#{$stroke_name}::before,
     .#{$stroke_name}-right:before, .#{$stroke_name}-left:before { border-width: $width; }
   }
 }
@@ -159,13 +163,13 @@ $loader_stroke_rotate_step: loader_stroke_rotate_step($loader_S_Body);
   $keyframes_name: #{$class_name}_K;
   @include make_stroke_colors_keyframes($keyframes_name, $colors_list);
   &.#{$class_name} {
-    &:before {
-      $animation_list: (L_stroke_rotate_F(),);
+    .#{$stroke_name}::before {
+      $animation_list: (L_stroke_fix_F(),);
       @include loader_stroke_colors_animation($animation_list, $keyframes_name, $colors_list);
     }
     
     @each $side in (right, left) {
-      .#{$stroke_name}-#{$side}:before {
+      .#{$stroke_name}-#{$side}::before {
         $animation_list: (L_stroke_side_grow_F($side),);
         @include loader_stroke_colors_animation($animation_list, $keyframes_name, $colors_list);
       }
@@ -191,9 +195,9 @@ $google_pride_colors: (#ff3d00, #fbbc05, #ffe600, #34a853, #4285f4, #673a87);
 
 /*
 
-.loader-circle {
-  @include loader_circle(loader-stroke);
-  @include loader_stroke_colors(loader-stroke, google-color, $google_colors);
+.circular-loader {
+  @include loader_circle(stroke);
+  @include loader_stroke_colors(stroke, google-color, $google_colors);
 }
 
 */

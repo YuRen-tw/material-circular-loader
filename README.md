@@ -4,9 +4,11 @@ Google Material design: [Progress & activity](https://www.google.com/design/spec
 ## Usage
 HTML
 ```html
-<div class="circular">
-  <div class="stroke-left"></div>
-  <div class="stroke-right"></div>
+<div class="circular-loader">
+  <div class="stroke">
+    <div class="stroke-left"></div>
+    <div class="stroke-right"></div>
+  </div>
 </div> 
 ```
 SCSS
@@ -45,8 +47,10 @@ Include mixin `loader_stroke_colors` to change the loader color.
 HTML
 ```html
 <div class="Cir my-color"> <!-- add a class -->
-  <div class="S-left"></div>
-  <div class="S-right"></div>
+  <div class="S">
+    <div class="S-left"></div>
+    <div class="S-right"></div>
+  </div>
 </div> 
 ```
 SCSS
@@ -79,8 +83,10 @@ Include mixin `loader_stroke_width` to change the stroke width.
 HTML
 ```html
 <div class="Cir new_width"> <!-- add a class -->
-  <div class="S-left"></div>
-  <div class="S-right"></div>
+  <div class="S">
+    <div class="S-left"></div>
+    <div class="S-right"></div>
+  </div>
 </div> 
 ```
 SCSS
@@ -99,8 +105,10 @@ Include mixin `loader_stroke_rotate_step` to change the rotate step.
 HTML
 ```html
 <div class="Cir seven_star"> <!-- add a class -->
-  <div class="S-left"></div>
-  <div class="S-right"></div>
+  <div class="S">
+    <div class="S-left"></div>
+    <div class="S-right"></div>
+  </div>
 </div> 
 ```
 SCSS
