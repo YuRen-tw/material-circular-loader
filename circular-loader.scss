@@ -1,19 +1,19 @@
 // Setting
-$loader_S_Tail:   5deg;  // less than (360deg - $loader_S_Body) / 2
-$loader_S_Body: 270deg;
-$loader_speed: 1333ms;
-$loader_timing_function: cubic-bezier(0.4, 0.0, 0.2, 1);
+$LOADER_S_Tail:   5deg;  // less than (360deg - $LOADER_S_Body) / 2
+$LOADER_S_Body: 270deg;
+$LOADER_SPEED: 1333ms;
+$LOADER_TIMEING_FUNCTION: cubic-bezier(0.4, 0.0, 0.2, 1);
 
 // Loader Stroke Degree
-$loader_S_Air: 360deg - $loader_S_Body;
-$loader_S_S: $loader_S_Tail * 2;
-$loader_S_L: $loader_S_Tail * 2 + $loader_S_Body;
+$LOADER_S_AIR: 360deg - $LOADER_S_Body;
+$LOADER_S_S: $LOADER_S_Tail * 2;
+$LOADER_S_L: $LOADER_S_Tail * 2 + $LOADER_S_Body;
 
 // Default
-$loader_size: 1em * (28 / 14);
-$loader_stroke_width: 1em * (3 / 14);
-$loader_Foot: 360deg * (3 / 5);
-$loader_circle_rotate_speed: 360deg / ($loader_Foot + $loader_S_Air) * $loader_speed;
+$LOADER_SIZE: 1em * (28 / 14);
+$LOADER_STROKE_WIDTH: 1em * (3 / 14);
+$LOADER_FOOT: 360deg * (3 / 5);
+$LOADER_CIRCLE_ROTATE_SPEED: 360deg / ($LOADER_FOOT + $LOADER_S_AIR) * $LOADER_SPEED;
 
 // Loader Stroke Rotate Step
 @function GCD($a, $b) {
@@ -23,7 +23,7 @@ $loader_circle_rotate_speed: 360deg / ($loader_Foot + $loader_S_Air) * $loader_s
 @function LCM($a, $b) {
   @return $a * $b / GCD($a, $b);
 }
-$loader_stroke_rotate_step: LCM(360, $loader_S_Body / 1deg) / ($loader_S_Body / 1deg);
+$LOADER_STROKE_ROTATE_STEP: LCM(360, $LOADER_S_Body / 1deg) / ($LOADER_S_Body / 1deg);
 
 // Keyframes
 @keyframes L_circle_rotate {
@@ -31,37 +31,61 @@ $loader_stroke_rotate_step: LCM(360, $loader_S_Body / 1deg) / ($loader_S_Body / 
   100% { transform: rotate(360deg); }
 }
 @keyframes L_stroke_rotate {
-  0%   { transform: rotate(   0deg); }
-  100% { transform: rotate(-360deg); }
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate($LOADER_S_Body * $LOADER_STROKE_ROTATE_STEP); }
 }
 @keyframes L_stroke_fix {
   0%   { transform: rotate(0deg); }
-  50%  { transform: rotate($loader_S_Body/2); }
-  100% { transform: rotate($loader_S_Body); }
+  50%  { transform: rotate($LOADER_S_Body / 2); }
+  100% { transform: rotate($LOADER_S_Body); }
 }
 @keyframes L_stroke_left_grow {
-  0%   { transform: rotate(0deg - $loader_S_S/2); }
-  50%  { transform: rotate(0deg - $loader_S_L/2); }
-  100% { transform: rotate(0deg - $loader_S_S/2); }
+  0%   { transform: rotate(0deg - $LOADER_S_S / 2); }
+  50%  { transform: rotate(0deg - $LOADER_S_L / 2); }
+  100% { transform: rotate(0deg - $LOADER_S_S / 2); }
 }
 @keyframes L_stroke_right_grow {
-  0%   { transform: rotate($loader_S_S/2); }
-  50%  { transform: rotate($loader_S_L/2); }
-  100% { transform: rotate($loader_S_S/2); }
+  0%   { transform: rotate($LOADER_S_S / 2); }
+  50%  { transform: rotate($LOADER_S_L / 2); }
+  100% { transform: rotate($LOADER_S_S / 2); }
 }
 
 // Animation Function
 @function L_circle_rotate_F($speed){
-  @return L_circle_rotate $speed linear infinite both;
+  @return (
+    /* animation-name:            */ L_circle_rotate
+    /* animation-duration:        */ $speed
+    /* animation-timing-function: */ linear
+    /* animation-iteration-count: */ infinite
+    /* animation-fill-mode:       */ both
+  );
 }
 @function L_stroke_rotate_F(){
-  @return L_stroke_rotate $loader_speed*$loader_stroke_rotate_step steps($loader_stroke_rotate_step) infinite both;
+  @return (
+    /* animation-name:            */ L_stroke_rotate
+    /* animation-duration:        */ $LOADER_SPEED * $LOADER_STROKE_ROTATE_STEP
+    /* animation-timing-function: */ steps($LOADER_STROKE_ROTATE_STEP)
+    /* animation-iteration-count: */ infinite
+    /* animation-fill-mode:       */ both
+  );
 }
 @function L_stroke_fix_F(){
-  @return L_stroke_fix $loader_speed $loader_timing_function infinite both;
+  @return (
+    /* animation-name:            */ L_stroke_fix
+    /* animation-duration:        */ $LOADER_SPEED
+    /* animation-timing-function: */ $LOADER_TIMEING_FUNCTION
+    /* animation-iteration-count: */ infinite
+    /* animation-fill-mode:       */ both
+  );
 }
 @function L_stroke_side_grow_F($side){
-  @return L_stroke_#{$side}_grow $loader_speed $loader_timing_function infinite both;
+  @return (
+    /* animation-name:            */ L_stroke_#{$side}_grow
+    /* animation-duration:        */ $LOADER_SPEED
+    /* animation-timing-function: */ $LOADER_TIMEING_FUNCTION
+    /* animation-iteration-count: */ infinite
+    /* animation-fill-mode:       */ both
+  );
 }
 
 // Style Extend
@@ -71,27 +95,27 @@ $loader_stroke_rotate_step: LCM(360, $loader_S_Body / 1deg) / ($loader_S_Body / 
 }
 %before { content: ""; display: block; }
 %loader_size {
-  width: $loader_size; height: $loader_size;
+  width: $LOADER_SIZE; height: $LOADER_SIZE;
   box-sizing: border-box;
   border-radius: 50%;
 }
 %loader_stroke {
   border-style: solid;
-  border-width: $loader_stroke_width;
+  border-width: $LOADER_STROKE_WIDTH;
   border-color: currentColor;
 }
 %loader_stroke_clip {
   &_right {
     position: absolute;
-    clip: rect(0 $loader_size $loader_size $loader_size/2);
+    clip: rect(0 $LOADER_SIZE $LOADER_SIZE $LOADER_SIZE/2);
   }
   &_left {
     position: absolute;
-    clip: rect(0 $loader_size/2 $loader_size 0);
+    clip: rect(0 $LOADER_SIZE/2 $LOADER_SIZE 0);
   }
   &_mid {
     position: absolute;
-    clip: rect(0 $loader_size/2 + .05em $loader_size/2 $loader_size/2 - .05em);
+    clip: rect(0 $LOADER_SIZE/2 + .05em $LOADER_SIZE/2 $LOADER_SIZE/2 - .05em);
   }
 }
 
@@ -113,7 +137,13 @@ $loader_stroke_rotate_step: LCM(360, $loader_S_Body / 1deg) / ($loader_S_Body / 
 }
 @mixin loader_stroke_colors_animation($animation_list, $keyframes_name, $colors_list) {
   $stroke_color_step: length($colors_list);
-  $colors_animation: #{$keyframes_name} $loader_speed*$stroke_color_step linear infinite both;
+  $colors_animation: (
+    /* animation-name:            */ #{$keyframes_name}
+    /* animation-duration:        */ $LOADER_SPEED * $stroke_color_step
+    /* animation-timing-function: */ linear
+    /* animation-iteration-count: */ infinite
+    /* animation-fill-mode:       */ both
+  );
   $animation_list: append($animation_list, $colors_animation);
   animation: $animation_list;
 }
@@ -121,7 +151,7 @@ $loader_stroke_rotate_step: LCM(360, $loader_S_Body / 1deg) / ($loader_S_Body / 
 // Loader Mixin
 @mixin loader_circle($stroke_name) {
   @extend %loader_size;
-  animation: L_circle_rotate_F($loader_circle_rotate_speed);
+  animation: L_circle_rotate_F($LOADER_CIRCLE_ROTATE_SPEED);
   
   .#{$stroke_name}::before,   
   .#{$stroke_name}-right, .#{$stroke_name}-left { animation: L_stroke_fix_F(); }
@@ -155,7 +185,7 @@ $loader_stroke_rotate_step: LCM(360, $loader_S_Body / 1deg) / ($loader_S_Body / 
 @mixin loader_stroke_width($stroke_name, $class_name, $width) {
   &.#{$class_name} {
     .#{$stroke_name}::before,
-    .#{$stroke_name}-right:before, .#{$stroke_name}-left:before { border-width: $width; }
+    .#{$stroke_name}-right::before, .#{$stroke_name}-left::before { border-width: $width; }
   }
 }
 
@@ -179,7 +209,7 @@ $loader_stroke_rotate_step: LCM(360, $loader_S_Body / 1deg) / ($loader_S_Body / 
 
 @mixin loader_stroke_rotate_step($class_name, $step) {
   $foot: 360deg * $step;
-  $speed: 360deg / ($foot + $loader_S_Air) * $loader_speed;
+  $speed: 360deg / ($foot + $LOADER_S_AIR) * $LOADER_SPEED;
   &.#{$class_name} { animation: L_circle_rotate_F($speed); }
 }
 
