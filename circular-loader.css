@@ -1,125 +1,50 @@
-@-webkit-keyframes L_circle_rotate {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
 @keyframes L_circle_rotate {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-@-webkit-keyframes L_stroke_rotate {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(-360deg);
-            transform: rotate(-360deg);
+    transform: rotate(360deg);
   }
 }
 @keyframes L_stroke_rotate {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-    -webkit-transform: rotate(-360deg);
-            transform: rotate(-360deg);
-  }
-}
-@-webkit-keyframes L_stroke_fix {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  50% {
-    -webkit-transform: rotate(135deg);
-            transform: rotate(135deg);
-  }
-  100% {
-    -webkit-transform: rotate(270deg);
-            transform: rotate(270deg);
+    transform: rotate(1080deg);
   }
 }
 @keyframes L_stroke_fix {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   50% {
-    -webkit-transform: rotate(135deg);
-            transform: rotate(135deg);
+    transform: rotate(135deg);
   }
   100% {
-    -webkit-transform: rotate(270deg);
-            transform: rotate(270deg);
-  }
-}
-@-webkit-keyframes L_stroke_left_grow {
-  0% {
-    -webkit-transform: rotate(-5deg);
-            transform: rotate(-5deg);
-  }
-  50% {
-    -webkit-transform: rotate(-140deg);
-            transform: rotate(-140deg);
-  }
-  100% {
-    -webkit-transform: rotate(-5deg);
-            transform: rotate(-5deg);
+    transform: rotate(270deg);
   }
 }
 @keyframes L_stroke_left_grow {
   0% {
-    -webkit-transform: rotate(-5deg);
-            transform: rotate(-5deg);
+    transform: rotate(-5deg);
   }
   50% {
-    -webkit-transform: rotate(-140deg);
-            transform: rotate(-140deg);
+    transform: rotate(-140deg);
   }
   100% {
-    -webkit-transform: rotate(-5deg);
-            transform: rotate(-5deg);
-  }
-}
-@-webkit-keyframes L_stroke_right_grow {
-  0% {
-    -webkit-transform: rotate(5deg);
-            transform: rotate(5deg);
-  }
-  50% {
-    -webkit-transform: rotate(140deg);
-            transform: rotate(140deg);
-  }
-  100% {
-    -webkit-transform: rotate(5deg);
-            transform: rotate(5deg);
+    transform: rotate(-5deg);
   }
 }
 @keyframes L_stroke_right_grow {
   0% {
-    -webkit-transform: rotate(5deg);
-            transform: rotate(5deg);
+    transform: rotate(5deg);
   }
   50% {
-    -webkit-transform: rotate(140deg);
-            transform: rotate(140deg);
+    transform: rotate(140deg);
   }
   100% {
-    -webkit-transform: rotate(5deg);
-            transform: rotate(5deg);
+    transform: rotate(5deg);
   }
 }
 .circular-loader .stroke::before, .circular-loader .stroke-right::before, .circular-loader .stroke-left::before {
@@ -155,42 +80,20 @@
 
 /**/
 .circular-loader {
-  -webkit-animation: L_circle_rotate 1568.23529ms linear infinite both;
-          animation: L_circle_rotate 1568.23529ms linear infinite both;
+  animation: L_circle_rotate 1568.23529ms linear infinite both;
 }
 .circular-loader .stroke::before,
 .circular-loader .stroke-right, .circular-loader .stroke-left {
-  -webkit-animation: L_stroke_fix 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_stroke_fix 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+  animation: L_stroke_fix 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
 }
 .circular-loader .stroke {
-  -webkit-animation: L_stroke_rotate 5332ms steps(4) infinite both;
-          animation: L_stroke_rotate 5332ms steps(4) infinite both;
+  animation: L_stroke_rotate 5332ms steps(4) infinite both;
 }
 .circular-loader .stroke-right::before {
-  -webkit-animation: L_stroke_right_grow 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_stroke_right_grow 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+  animation: L_stroke_right_grow 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
 }
 .circular-loader .stroke-left::before {
-  -webkit-animation: L_stroke_left_grow 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-          animation: L_stroke_left_grow 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-}
-@-webkit-keyframes google-color_K {
-  0%, 15% {
-    border-color: #4285f4;
-  }
-  25%, 40% {
-    border-color: #ea4335;
-  }
-  50%, 65% {
-    border-color: #fbbc05;
-  }
-  75%, 90% {
-    border-color: #34a853;
-  }
-  100% {
-    border-color: #4285f4;
-  }
+  animation: L_stroke_left_grow 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
 }
 @keyframes google-color_K {
   0%, 15% {
@@ -210,16 +113,13 @@
   }
 }
 .circular-loader.google-color .stroke::before {
-  -webkit-animation: L_stroke_fix 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color_K 5332ms linear infinite both;
-          animation: L_stroke_fix 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color_K 5332ms linear infinite both;
+  animation: L_stroke_fix 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color_K 5332ms linear infinite both;
 }
 .circular-loader.google-color .stroke-right::before {
-  -webkit-animation: L_stroke_right_grow 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color_K 5332ms linear infinite both;
-          animation: L_stroke_right_grow 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color_K 5332ms linear infinite both;
+  animation: L_stroke_right_grow 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color_K 5332ms linear infinite both;
 }
 .circular-loader.google-color .stroke-left::before {
-  -webkit-animation: L_stroke_left_grow 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color_K 5332ms linear infinite both;
-          animation: L_stroke_left_grow 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color_K 5332ms linear infinite both;
+  animation: L_stroke_left_grow 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, google-color_K 5332ms linear infinite both;
 }
 
 /**/
