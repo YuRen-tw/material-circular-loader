@@ -13,7 +13,7 @@ HTML
 ```
 SCSS
 ```scss
-.circular {
+.circular-loader {
   @include loader_circle(stroke); // class name of stroke
 }
 ```
@@ -24,7 +24,7 @@ Use `font-size` to change the loader size.
 
 SCSS
 ```scss
-.circular {
+.circular-loader {
   @include loader_circle(stroke);
   font-size: 30px; // width and height become 60px
 }
@@ -35,7 +35,7 @@ Use `color` to change the loader color.
 
 SCSS
 ```scss
-.circular {
+.circular-loader {
   @include loader_circle(stroke);
   color: #2a74f6;
 }
